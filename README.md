@@ -1,3 +1,5 @@
+
+
 # wialon-php-oauth
 Wialon-php-oauth allows authorization on the Wialon Remote API server in accordance with the documentation on the oauth protocol.
 
@@ -14,12 +16,12 @@ When you have access token, you can login:
     if ($_GET['access_token']) {
 	    $client = new GuzzleHttp\Client();
 	    $token = new valentinbv\WialonOAuth\TokenLogin('https://hst-api.wialon.com/wialon/ajax.html', $client);
-    try {
-        $token->setToken($_GET['access_token']);
-        $result = $token->login();
-        } catch(\Exception  $e) { 
-	        echo $e->getMessage();
-        }
+	    try {
+		    $token->setToken($_GET['access_token']);
+		    $result = $token->login();
+	    } catch(\Exception $e) { 
+		    echo $e->getMessage();
+	    }
     }
 
 The $result array contains the result of the query to the wialon server according to the documentation
