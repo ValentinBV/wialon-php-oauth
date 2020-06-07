@@ -1,0 +1,30 @@
+{
+    "name": "valentinbv/wialon-php-oauth",
+    "type": "library",
+    "description": "wialon php oauth library",
+    "keywords": [
+        "wialon", 
+        "wialon oauth",
+        "wialon php", 
+        "wialon php oauth", 
+        "wialon php sdk", 
+        "wialon php sdk oauth", 
+        "wialon php library"
+    ],
+    "authors": [
+        {
+            "name": "Valentin Bondarenko",
+            "email": "bvv1988@gmail.com"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=7.1",
+        "guzzlehttp/guzzle": "~6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "valentinbv\\": "src/"
+        }
+    }
+}
