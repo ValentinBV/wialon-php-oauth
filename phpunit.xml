@@ -12,7 +12,7 @@
     <testsuites>
         <testsuite name="Source">
             <file>tests/OAuthTest.php</file>
-             <file>tests/TokenLoginTest.php</file>
+            <file>tests/TokenLoginTest.php</file>
         </testsuite>
     </testsuites>
 </phpunit>

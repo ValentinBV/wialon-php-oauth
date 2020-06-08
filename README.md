@@ -15,7 +15,7 @@ When you have access token, you can login:
 
     if ($_GET['access_token']) {
 	    $client = new GuzzleHttp\Client();
-	    $token = new valentinbv\WialonOAuth\TokenLogin('https://hst-api.wialon.com/wialon/ajax.html', $client);
+	    $token = new valentinbv\WialonOAuth\TokenLogin($client);
 	    try {
             $token->setToken($_GET['access_token']);
             $result = $token->login();

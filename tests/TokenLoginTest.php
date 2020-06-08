@@ -43,7 +43,7 @@ class TokenLoginTest extends TestCase
         $stubResultQueryContents->method('getContents')
             ->willReturn($this->loginDataSuccess);
         
-        $this->source = new TokenLogin($this->testHost, $stubClient);
+        $this->source = new TokenLogin($stubClient, $this->testHost);
         $this->source->setToken('testToken');
         $this->source->setOperateAs('TestUser');
         $this->source->setfl(4);
@@ -75,12 +75,22 @@ class TokenLoginTest extends TestCase
         $stubClient = $this->createMock(Client::class);
         $stubClient->method('request')
             ->will($this->throwException(new TransferException));
-        $this->source = new TokenLogin($this->testHost, $stubClient);
+        $this->source = new TokenLogin($stubClient, $this->testHost);
 
         try {
             $this->source->login();
         } catch (TokenLoginException $e) {
             $this->assertInstanceOf(TokenLoginException::class, $e);
         }
+    }
+
+    public function testDecodeBodySuccess()
+    {
+        $this->assertEquals($this->source->decodeBody($this->loginDataSuccess), \json_decode($this->loginDataSuccess, true));
+    }
+
+    public function testDecodeBodyError()
+    {
+        $this->assertEquals($this->source->decodeBody('error string'), []);
     }
 }

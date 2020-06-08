@@ -19,7 +19,7 @@ class TokenLogin {
     /**
      * @var string
      */
-    private $host = '';
+    private $host = 'https://hst-api.wialon.com/wialon/ajax.html';
     /**
      * @var string
      */
@@ -35,8 +35,10 @@ class TokenLogin {
      * @param string $host
      * @param \GuzzleHttp\ClientInterface $httpClient
      */
-    public function __construct(string $host, ClientInterface $httpClient) {
-        $this->host = $host;
+    public function __construct(ClientInterface $httpClient, string $host = '') {
+        if ($host) {
+            $this->host = $host;
+        }
         $this->httpClient = $httpClient;
     }
 
@@ -116,6 +118,22 @@ class TokenLogin {
     }
 
     /**
+     * Decode query result body.
+     * @param string $body
+     * @return array
+     */
+    public function decodeBody(string $body): array
+    {
+        $decodeBody = json_decode($body, true);
+
+        if ($decodeBody === null || !is_array($decodeBody)) {
+            $decodeBody = [];
+        }
+
+        return $decodeBody;
+    }
+
+    /**
      * Login by token
      * @return array
      * @throws \valentinbv\WialonOAuth\Exception\TokenLoginException
@@ -126,13 +144,14 @@ class TokenLogin {
             $response = $this->httpClient->request('POST', $this->host, [
                 'form_params' => [
                     'svc'=> $this->svc,
-                    'params' => json_encode($this->params)]
+                    'params' => json_encode($this->params)
+                ]
             ]);
         } catch (TransferException $e) {
             throw new TokenLoginException($e);
         }
-        $result = $response->getBody()->getContents();
+        $result = $this->decodeBody($response->getBody()->getContents());
 
-        return $result ? \json_decode($result, true) : [];
+        return $result;
     }
 }
