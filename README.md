@@ -5,20 +5,20 @@ Wialon-php-oauth allows authorization on the Wialon Remote API server in accorda
 
 For example, in first, get authorize url:
 
-    $auth = new valentinbv\WialonOAuth\OAuth(
+    $authHelper = new valentinbv\WialonOAuth\OAuthHelper(
 	    'https://your-api-server.com/login.html
     );
-    $auth->setRedirectUri('https://your-redirect-url.com/');
-    $auth->getAuthorizeUrl();
+    $authHelper->setRedirectUri('https://your-redirect-url.com/');
+    $authHelper->getAuthorizeUrl();
 
 When you have access token, you can login:
 
     if ($_GET['access_token']) {
-	    $client = new GuzzleHttp\Client();
-	    $token = new valentinbv\WialonOAuth\TokenLogin($client);
+	    $httpClient = new GuzzleHttp\Client();
+	    $auth = new valentinbv\WialonOAuth\OAuthClient($httpClient);
 	    try {
-            $token->setToken($_GET['access_token']);
-            $result = $token->login();
+            $auth->setToken($_GET['access_token']);
+            $result = $auth->login();
 	    } catch(\Exception $e) { 
             echo $e->getMessage();
 	    }
