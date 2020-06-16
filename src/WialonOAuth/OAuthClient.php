@@ -6,7 +6,8 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\TransferException;
 use valentinbv\WialonOAuth\Exception\TokenLoginException;
 
-class OAuthClient {
+class OAuthClient
+{
 
     private const PARAM_TOKEN = 'token';
     private const PARAM_OPERATE_AS = 'operate_as';
@@ -25,7 +26,7 @@ class OAuthClient {
      */
     private $svc = 'token/login';
     /**
-     * 
+     *
      * @var ClientInterface
      */
     private $httpClient;
@@ -35,7 +36,8 @@ class OAuthClient {
      * @param string $authUrl
      * @param ClientInterface $httpClient
      */
-    public function __construct(ClientInterface $httpClient, string $authUrl = '') {
+    public function __construct(ClientInterface $httpClient, string $authUrl = '')
+    {
         if ($authUrl) {
             $this->authUrl = $authUrl;
         }
@@ -53,7 +55,7 @@ class OAuthClient {
 
     /**
      * Get params
-     * @return string
+     * @return array
      */
     public function getParams(): array
     {
@@ -77,7 +79,7 @@ class OAuthClient {
     public function setToken(string $token)
     {
         $this->params[static::PARAM_TOKEN] = $token;
-        
+
         return $this;
     }
 
@@ -101,7 +103,7 @@ class OAuthClient {
     public function setfl(int $fl)
     {
         $this->params[static::PARAM_FL] = $fl;
-        
+
         return $this;
     }
 
@@ -113,7 +115,7 @@ class OAuthClient {
     public function setSvc(string $svc)
     {
         $this->svc = $svc;
-        
+
         return $this;
     }
 
@@ -143,15 +145,13 @@ class OAuthClient {
         try {
             $response = $this->httpClient->request('POST', $this->authUrl, [
                 'form_params' => [
-                    'svc'=> $this->svc,
+                    'svc' => $this->svc,
                     'params' => json_encode($this->params)
                 ]
             ]);
         } catch (TransferException $e) {
             throw new TokenLoginException($e);
         }
-        $result = $this->decodeBody($response->getBody()->getContents());
-
-        return $result;
+        return $this->decodeBody($response->getBody()->getContents());
     }
 }

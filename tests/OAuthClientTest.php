@@ -4,6 +4,7 @@
  *
  * (c) Valentin Bondarenko <bvv1988@gmail.com>
  */
+
 use PHPUnit\Framework\TestCase;
 use valentinbv\WialonOAuth\OAuthClient;
 use valentinbv\WialonOAuth\Exception\TokenLoginException;
@@ -42,7 +43,7 @@ class OAuthClientTest extends TestCase
             ->willReturn($stubResultQueryContents);
         $stubResultQueryContents->method('getContents')
             ->willReturn($this->loginDataSuccess);
-        
+
         $this->source = new OAuthClient($stubClient, $this->testAuthUrl);
         $this->source->setToken('testToken');
         $this->source->setOperateAs('TestUser');

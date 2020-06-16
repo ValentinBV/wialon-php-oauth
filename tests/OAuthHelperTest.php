@@ -4,6 +4,7 @@
  *
  * (c) Valentin Bondarenko <bvv1988@gmail.com>
  */
+
 use PHPUnit\Framework\TestCase;
 use valentinbv\WialonOAuth\OAuthHelper;
 
@@ -30,7 +31,7 @@ class OAuthHelperTest extends TestCase
             'response_type' => 'token',
             'css_url' => 'example.com/css',
         ];
-        $this->testAuthorizationUrl = $this->testAuthUrl . '?' .  http_build_query($this->params);
+        $this->testAuthorizationUrl = $this->testAuthUrl . '?' . http_build_query($this->params);
 
         $this->source = new OAuthHelper($this->testAuthUrl);
         $this->source->setClientId('testClient');

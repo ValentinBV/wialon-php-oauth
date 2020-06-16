@@ -2,7 +2,8 @@
 
 namespace valentinbv\WialonOAuth;
 
-class OAuthHelper {
+class OAuthHelper
+{
 
     private const PARAM_CLIENT_ID = 'client_id';
     private const PARAM_ACCESS_TYPE = 'access_type';
@@ -42,7 +43,7 @@ class OAuthHelper {
      */
     public function getAuthorizationUrl(): string
     {
-        return $this->authUrl . '?' .  http_build_query($this->params);
+        return $this->authUrl . '?' . http_build_query($this->params);
     }
 
     /**
@@ -71,7 +72,7 @@ class OAuthHelper {
     public function setClientId(string $clientId)
     {
         $this->params[static::PARAM_CLIENT_ID] = $clientId;
-        
+
         return $this;
     }
 
@@ -95,7 +96,7 @@ class OAuthHelper {
     public function setActivationTime(int $activationTime)
     {
         $this->params[static::PARAM_ACTIVATION_TIME] = $activationTime;
-        
+
         return $this;
     }
 
@@ -107,7 +108,7 @@ class OAuthHelper {
     public function setDuration(int $duration)
     {
         $this->params[static::PARAM_DURATION] = $duration;
-        
+
         return $this;
     }
 
@@ -119,7 +120,7 @@ class OAuthHelper {
     public function setLang(string $lang)
     {
         $this->params[static::PARAM_LANG] = $lang;
-        
+
         return $this;
     }
 
@@ -131,7 +132,7 @@ class OAuthHelper {
     public function setFlags(int $flags)
     {
         $this->params[static::PARAM_FLAGS] = $flags;
-        
+
         return $this;
     }
 
@@ -143,7 +144,7 @@ class OAuthHelper {
     public function setUser(string $user)
     {
         $this->params[static::PARAM_USER] = $user;
-        
+
         return $this;
     }
 
@@ -155,7 +156,7 @@ class OAuthHelper {
     public function setRedirectUri(string $redirectUri)
     {
         $this->params[static::PARAM_REDIRECT_URI] = $redirectUri;
-        
+
         return $this;
     }
 
@@ -167,7 +168,7 @@ class OAuthHelper {
     public function setResponseType(string $responseType)
     {
         $this->params[static::PARAM_RESPONSE_TYPE] = $responseType;
-        
+
         return $this;
     }
 
@@ -179,7 +180,7 @@ class OAuthHelper {
     public function setCssUrl(string $cssUrl)
     {
         $this->params[static::PARAM_CSS_URL] = $cssUrl;
-        
+
         return $this;
     }
 }
