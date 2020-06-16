@@ -9,7 +9,7 @@ For example, in first, get authorize url:
 	    'https://your-api-server.com/login.html
     );
     $authHelper->setRedirectUri('https://your-redirect-url.com/');
-    $authHelper->getAuthorizeUrl();
+    $authHelper->getAuthorizationUrl();
 
 When you have access token, you can login:
 
