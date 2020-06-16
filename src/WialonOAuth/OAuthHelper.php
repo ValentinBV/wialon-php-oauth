@@ -2,7 +2,7 @@
 
 namespace valentinbv\WialonOAuth;
 
-class OAuth {
+class OAuthHelper {
 
     private const PARAM_CLIENT_ID = 'client_id';
     private const PARAM_ACCESS_TYPE = 'access_type';
@@ -19,40 +19,44 @@ class OAuth {
      * @var array
      */
     private $params = [];
+
     /**
      * @var string
      */
-    private $host = '';
+    private $authUrl = '';
 
     /**
-     * OAuth constructor
-     * @param string $host
+     * OAuthHelper constructor
+     * @param string $authUrl
      */
-    public function __construct(string $host) {
-        $this->host = $host;
+    public function __construct(string $authUrl = '')
+    {
+        if ($authUrl) {
+            $this->authUrl = $authUrl;
+        }
     }
 
     /**
-     * Get authorize url
+     * Get authUrl url
      * @return string
      */
-    public function getAuthorizeUrl(): string
+    public function getAuthorizationUrl(): string
     {
-        return $this->host . '?' .  http_build_query($this->params);
+        return $this->authUrl . '?' .  http_build_query($this->params);
     }
 
     /**
-     * Get host
+     * Get authUrl
      * @return string
      */
-    public function getHost(): string
+    public function getAuthUrl(): string
     {
-        return $this->host;
+        return $this->authUrl;
     }
 
     /**
      * Get params
-     * @return string
+     * @return array
      */
     public function getParams(): array
     {

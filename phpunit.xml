@@ -11,8 +11,8 @@
     verbose="true">
     <testsuites>
         <testsuite name="Source">
-            <file>tests/OAuthTest.php</file>
-            <file>tests/TokenLoginTest.php</file>
+            <file>tests/OAuthHelperTest.php</file>
+            <file>tests/OAuthClientTest.php</file>
         </testsuite>
     </testsuites>
 </phpunit>

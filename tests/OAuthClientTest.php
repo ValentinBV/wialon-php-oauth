@@ -5,24 +5,24 @@
  * (c) Valentin Bondarenko <bvv1988@gmail.com>
  */
 use PHPUnit\Framework\TestCase;
-use valentinbv\WialonOAuth\TokenLogin;
+use valentinbv\WialonOAuth\OAuthClient;
 use valentinbv\WialonOAuth\Exception\TokenLoginException;
 use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Client;
 use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\StreamInterface;
 
-class TokenLoginTest extends TestCase
+class OAuthClientTest extends TestCase
 {
     private $source;
-    private $testHost;
+    private $testAuthUrl;
     private $testSvc;
     private $params = [];
     private $loginDataSuccess = '';
 
     protected function setUp(): void
     {
-        $this->testHost = 'example.com';
+        $this->testAuthUrl = 'example.com';
         $this->testSvc = 'testOperation';
         $this->params = [
             'token' => 'testToken',
@@ -43,16 +43,16 @@ class TokenLoginTest extends TestCase
         $stubResultQueryContents->method('getContents')
             ->willReturn($this->loginDataSuccess);
         
-        $this->source = new TokenLogin($stubClient, $this->testHost);
+        $this->source = new OAuthClient($stubClient, $this->testAuthUrl);
         $this->source->setToken('testToken');
         $this->source->setOperateAs('TestUser');
         $this->source->setfl(4);
         $this->source->setSvc('testOperation');
     }
 
-    public function testHost()
+    public function testAuthUrl()
     {
-        $this->assertEquals($this->source->getHost(), $this->testHost);
+        $this->assertEquals($this->source->getAuthUrl(), $this->testAuthUrl);
     }
 
     public function testParams()
@@ -75,7 +75,7 @@ class TokenLoginTest extends TestCase
         $stubClient = $this->createMock(Client::class);
         $stubClient->method('request')
             ->will($this->throwException(new TransferException));
-        $this->source = new TokenLogin($stubClient, $this->testHost);
+        $this->source = new OAuthClient($stubClient, $this->testAuthUrl);
 
         try {
             $this->source->login();

@@ -5,19 +5,19 @@
  * (c) Valentin Bondarenko <bvv1988@gmail.com>
  */
 use PHPUnit\Framework\TestCase;
-use valentinbv\WialonOAuth\OAuth;
+use valentinbv\WialonOAuth\OAuthHelper;
 
-class OAuthTest extends TestCase
+class OAuthHelperTest extends TestCase
 {
 
     private $source;
-    private $testHost;
-    private $testAuthorizeUrl;
+    private $testAuthorizationUrl;
+    private $testAuthUrl;
     private $params = [];
 
     protected function setUp(): void
     {
-        $this->testHost = 'example.com';
+        $this->testAuthUrl = 'example.com';
         $this->params = [
             'client_id' => 'testClient',
             'access_type' => 256,
@@ -30,9 +30,9 @@ class OAuthTest extends TestCase
             'response_type' => 'token',
             'css_url' => 'example.com/css',
         ];
-        $this->testAuthorizeUrl = $this->testHost . '?' .  http_build_query($this->params);
+        $this->testAuthorizationUrl = $this->testAuthUrl . '?' .  http_build_query($this->params);
 
-        $this->source = new OAuth($this->testHost);
+        $this->source = new OAuthHelper($this->testAuthUrl);
         $this->source->setClientId('testClient');
         $this->source->setAccessType(256);
         $this->source->setActivationTime(0);
@@ -45,9 +45,9 @@ class OAuthTest extends TestCase
         $this->source->setCssUrl('example.com/css');
     }
 
-    public function testHost()
+    public function testAuthUrl()
     {
-        $this->assertEquals($this->source->getHost(), $this->testHost);
+        $this->assertEquals($this->source->getAuthUrl(), $this->testAuthUrl);
     }
 
     public function testParams()
@@ -55,8 +55,8 @@ class OAuthTest extends TestCase
         $this->assertEquals($this->source->getParams(), $this->params);
     }
 
-    public function testAuthorizeUrl()
+    public function testAuthorizationUrl()
     {
-        $this->assertEquals($this->source->getAuthorizeUrl(), $this->testAuthorizeUrl);
+        $this->assertEquals($this->source->getAuthorizationUrl(), $this->testAuthorizationUrl);
     }
 }

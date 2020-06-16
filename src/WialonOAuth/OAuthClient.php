@@ -6,7 +6,7 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\TransferException;
 use valentinbv\WialonOAuth\Exception\TokenLoginException;
 
-class TokenLogin {
+class OAuthClient {
 
     private const PARAM_TOKEN = 'token';
     private const PARAM_OPERATE_AS = 'operate_as';
@@ -19,36 +19,36 @@ class TokenLogin {
     /**
      * @var string
      */
-    private $host = 'https://hst-api.wialon.com/wialon/ajax.html';
+    private $authUrl = 'https://hst-api.wialon.com/wialon/ajax.html';
     /**
      * @var string
      */
     private $svc = 'token/login';
     /**
      * 
-     * @var \GuzzleHttp\ClientInterface
+     * @var ClientInterface
      */
     private $httpClient;
 
     /**
-     * TokenLogin constructor
-     * @param string $host
-     * @param \GuzzleHttp\ClientInterface $httpClient
+     * OAuthClient constructor
+     * @param string $authUrl
+     * @param ClientInterface $httpClient
      */
-    public function __construct(ClientInterface $httpClient, string $host = '') {
-        if ($host) {
-            $this->host = $host;
+    public function __construct(ClientInterface $httpClient, string $authUrl = '') {
+        if ($authUrl) {
+            $this->authUrl = $authUrl;
         }
         $this->httpClient = $httpClient;
     }
 
     /**
-     * Get host
+     * Get authUrl
      * @return string
      */
-    public function getHost(): string
+    public function getAuthUrl(): string
     {
-        return $this->host;
+        return $this->authUrl;
     }
 
     /**
@@ -136,12 +136,12 @@ class TokenLogin {
     /**
      * Login by token
      * @return array
-     * @throws \valentinbv\WialonOAuth\Exception\TokenLoginException
+     * @throws TokenLoginException
      */
     public function login(): array
     {
         try {
-            $response = $this->httpClient->request('POST', $this->host, [
+            $response = $this->httpClient->request('POST', $this->authUrl, [
                 'form_params' => [
                     'svc'=> $this->svc,
                     'params' => json_encode($this->params)
